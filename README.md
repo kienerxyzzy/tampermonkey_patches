@@ -1,3 +1,3 @@
 # GTCEu Tampermonkey Patches
 Adds bedrock ore veins and miners to GTCEU.
-Not ready yet - requires testing.
+Seems to work as intended (at least on GT community pack)
