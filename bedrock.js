@@ -380,7 +380,7 @@ GTCEuServerEvents.bedrockOreVeins((event) => {
   veins.forEach((m) => {
     let dimension = dim[m.layer];
     event.add(`kubejs:${dimension}_${m.name}`, (vein) => {
-      vein.weight(100).size(3).yield(1, 2).dimensions(`minecraft:${dimension}`);
+      vein.weight(100).size(5).yield(4, 6).dimensions(`minecraft:${dimension}`);
 
       m.minerals.forEach((n) => {
         vein.material(n.mat, n.weight);
