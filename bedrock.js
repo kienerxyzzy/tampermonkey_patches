@@ -60,7 +60,7 @@ const veins = [
     name: "banded_iron_vein",
     minerals: [
       { mat: GTMaterials.Goethite, weight: 3 },
-      { mat: GTMaterials.Limonite, weight: 2 },
+      { mat: GTMaterials.YellowLimonite, weight: 2 },
       { mat: GTMaterials.Hematite, weight: 2 },
       { mat: GTMaterials.Gold, weight: 1 },
     ],
@@ -232,7 +232,7 @@ const veins = [
     name: "iron_vein",
     minerals: [
       { mat: GTMaterials.Goethite, weight: 5 },
-      { mat: GTMaterials.Limonite, weight: 2 },
+      { mat: GTMaterials.YellowLimonite, weight: 2 },
       { mat: GTMaterials.Hematite, weight: 2 },
       { mat: GTMaterials.Malachite, weight: 1 },
     ],
@@ -378,13 +378,58 @@ const dim = {
 };
 GTCEuServerEvents.bedrockOreVeins((event) => {
   veins.forEach((m) => {
-    dimension = dim[m.layer];
+    let dimension = dim[m.layer];
     event.add(`kubejs:${dimension}_${m.name}`, (vein) => {
       vein.weight(100).size(3).yield(1, 2).dimensions(`minecraft:${dimension}`);
 
       m.minerals.forEach((n) => {
         vein.material(n.mat, n.weight);
+        //console.log(n.mat,n.weight)
       });
     });
   });
+});
+ServerEvents.recipes((event) => {
+  event.recipes.gtceu
+    .assembler("mv_bdrill")
+    .itemInputs([
+      "gtceu:mv_machine_hull",
+      "4x gtceu:steel_frame",
+      "4x #gtceu:circuits/mv",
+      "4x gtceu:mv_electric_motor",
+      "4x gtceu:mv_sensor",
+      "4x gtceu:vanadium_steel_gear",
+    ])
+    .itemOutputs("gtceu:mv_bedrock_ore_miner")
+    .duration(20 * 20)
+    .circuit(2)
+    .EUt(GTValues.VA[GTValues.MV]);
+  event.recipes.gtceu
+    .assembler("hv_bdrill")
+    .itemInputs([
+      "gtceu:ev_machine_hull",
+      "4x gtceu:titanium_frame",
+      "4x #gtceu:circuits/ev",
+      "4x gtceu:ev_electric_motor",
+      "4x gtceu:ev_sensor",
+      "4x gtceu:tungsten_carbide_gear",
+    ])
+    .itemOutputs("gtceu:hv_bedrock_ore_miner")
+    .duration(20 * 20)
+    .circuit(2)
+    .EUt(GTValues.VA[GTValues.EV]);
+  event.recipes.gtceu
+    .assembler("ev_bdrill")
+    .itemInputs([
+      "gtceu:luv_machine_hull",
+      "4x gtceu:tungstensteel_frame",
+      "4x #gtceu:circuits/luv",
+      "4x gtceu:luv_electric_motor",
+      "4x gtceu:luv_sensor",
+      "4x gtceu:osmiridium_gear",
+    ])
+    .itemOutputs("gtceu:ev_bedrock_ore_miner")
+    .duration(20 * 20)
+    .circuit(2)
+    .EUt(GTValues.VA[GTValues.LuV]);
 });
